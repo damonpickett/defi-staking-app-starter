@@ -14,7 +14,7 @@ contract DecentralBank {
     // Key-value stores for the balance of a user's stake, and for keeping track of who has staked and is staked
     mapping(address => uint) public stakingBalance;
     mapping(address => bool) public hasStaked;
-    mapping(address => bool) public isStaked;
+    mapping(address => bool) public isStaking;
 
     constructor(RWD _rwd, Tether _tether) public {
         rwd = _rwd;
@@ -25,14 +25,14 @@ contract DecentralBank {
     function depositTokens(uint _amount) public {
         // require staking amount to be greater than zero
         require(_amount > 0, 'amount cannot be zero');
-        
+
         // Transfer Tether tokens to this contract address for staking
         tether.transferFrom(msg.sender, address(this), _amount);
 
         // Update Staking Balance
         stakingBalance[msg.sender] = stakingBalance[msg.sender] + _amount;
-        if(!hasStaked) {
-            stakers.push[msg.sender];
+        if(!hasStaked[msg.sender]) {
+            stakers.push(msg.sender);
         }
 
         isStaking[msg.sender] = true;
