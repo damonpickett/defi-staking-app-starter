@@ -23,6 +23,9 @@ contract DecentralBank {
 
     // staking function
     function depositTokens(uint _amount) public {
+        // require staking amount to be greater than zero
+        require(_amount > 0, 'amount cannot be zero');
+        
         // Transfer Tether tokens to this contract address for staking
         tether.transferFrom(msg.sender, address(this), _amount);
 
