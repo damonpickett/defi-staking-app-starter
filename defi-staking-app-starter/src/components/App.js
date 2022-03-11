@@ -69,6 +69,7 @@ class App extends Component {
             window.alert('Error! Decentral Bank contract not deployed - no detected network')
         }
         this.setState({loading: false})
+        
     }
     
     constructor(props) {
@@ -86,6 +87,10 @@ class App extends Component {
     }
 
     render() {
+        let content
+        {this.state.loading ? content = 
+        <p id='loader' className='text-center' style={{margin:'30px'}}>
+        LOADING PLEASE...</p> : content = <Main />}
         return (
             <div>
                 <Navbar account={this.state.account}/>
@@ -93,7 +98,7 @@ class App extends Component {
                     <div className='row'>
                         <main role='main' className='col-lg-12 ml-auto mr-auto' style={{maxWidth: '600px', minHeight: '100vm'}}>
                             <div>
-                                <Main />
+                                {content}
                             </div>
                         </main>
                     </div>
