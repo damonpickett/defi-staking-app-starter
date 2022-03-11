@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import Tether from '../truffle_abis/Tether.json';
 import RWD from '../truffle_abis/RWD.json';
 import DecentralBank from '../truffle_abis/DecentralBank.json';
+import Main from './Main'
 
 
 class App extends Component {
@@ -15,7 +16,7 @@ class App extends Component {
         await this.loadBlockchainData()
     }
 
-    // this function connects app to blockchain
+    // this function connects app to meta mask
     async loadWeb3() {
         if(window.ethereum) {
             window.web3 = new Web3(window.ethereum)
@@ -30,6 +31,7 @@ class App extends Component {
     async loadBlockchainData() {
         const web3 = window.web3
         const account = await web3.eth.getAccounts()
+        console.log(account)
         this.setState({account: account[0]})
         console.log(account)
         const networkId = await web3.eth.net.getId()
@@ -87,9 +89,15 @@ class App extends Component {
         return (
             <div>
                 <Navbar account={this.state.account}/>
-                <h1>
-                    {console.log(this.state.loading)}
-                </h1>
+                <div className='containter-fluid mt-5'>
+                    <div className='row'>
+                        <main role='main' className='col-lg-12 ml-auto mr-auto' style={{maxWidth: '600px', minHeight: '100vm'}}>
+                            <div>
+                                <Main />
+                            </div>
+                        </main>
+                    </div>
+                </div>
             </div>
         )
     }
