@@ -6,6 +6,7 @@ import Tether from '../truffle_abis/Tether.json';
 import RWD from '../truffle_abis/RWD.json';
 import DecentralBank from '../truffle_abis/DecentralBank.json';
 import Main from './Main'
+import ParticleSettings from './ParticleSettings'
 
 
 class App extends Component {
@@ -87,15 +88,13 @@ class App extends Component {
     })
     }
 
-    unstakeTokens = (amount) => {
+    unstakeTokens = () => {
         this.setState({loading: true})
-        this.state.decentralBank.methods.unstakeTokens(amount).send({from: this.state.account}).on('transactionHash', (hash) => {
+        this.state.decentralBank.methods.unstakeTokens().send({from: this.state.account}).on('transactionHash', (hash) => {
             this.setState({loading: false})
         })
     }
 
-    
-    
     constructor(props) {
         super(props)
         this.state = {
@@ -123,7 +122,10 @@ class App extends Component {
         unstakeTokens={this.unstakeTokens}
         />}
         return (
-            <div>
+            <div className='App' style={{position: 'relative'}}>
+                <div style={{position: 'absolute'}}>
+                    <ParticleSettings />
+                </div>
                 <Navbar account={this.state.account}/>
                 <div className='container-fluid mt-5'>
                     <div className='row'>

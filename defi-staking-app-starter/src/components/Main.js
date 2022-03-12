@@ -53,13 +53,12 @@ class Main extends Component {
                         </div>
                     </form>
                     <button 
+                    type='submit'
                     onClick={(event) => {
-                        event.preventDefault()
-                        let amount
-                        amount = this.input.value.toString()
-                        amount = window.web3.utils.toWei(amount, 'Ether')
-                        this.props.unstakeTokens(amount)
-                    }} 
+                        event.preventDefault(
+                            this.props.unstakeTokens()
+                        )
+                    }}
                     className='btn btn-primary btn-lg btn-block'>Withdraw</button>
                     <div className='card-body text-center' style={{color:'blue'}}>
                         AIRDROP
