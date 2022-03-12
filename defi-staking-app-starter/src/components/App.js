@@ -31,9 +31,7 @@ class App extends Component {
     async loadBlockchainData() {
         const web3 = window.web3
         const account = await web3.eth.getAccounts()
-        console.log(account)
         this.setState({account: account[0]})
-        console.log(account)
         const networkId = await web3.eth.net.getId()
 
         // Load Tether contract
@@ -49,6 +47,7 @@ class App extends Component {
 
         // Load RWD Contract
         const rwdData = RWD.networks[networkId]
+        console.log(rwdData)
         if(rwdData) {
            const rwd = new web3.eth.Contract(RWD.abi, rwdData.address)
            this.setState({rwd})
@@ -69,8 +68,26 @@ class App extends Component {
             window.alert('Error! Decentral Bank contract not deployed - no detected network')
         }
         this.setState({loading: false})
-        
     }
+
+    // two functions, one that stakes and one that unstakes
+    // leverage our decentralBank contract - deposit tokens and unstaking
+    // All of this is for the staking:
+    // depositTokens transferFrom ....
+    // function approve transaction hash ----
+    // STAKING FUNCTION ?? >> decentralBank.deposit(send transactionHash => )
+
+    // staking function
+    stakeTokens = (amount) => {
+        this.setState({loading: true})
+        this.state.tether.methods.approve(this.state.decentralBank._address, amount).send({from: this.state.account}).on('transactionHash', (hash) => {
+        this.state.decentralBank.methods.depositTokens(amount).send({from: this.state.account}).on('transactionHash', (hash) => {
+            this.setState({loading: false})
+        })
+    })
+    }
+
+    
     
     constructor(props) {
         super(props)
@@ -90,15 +107,22 @@ class App extends Component {
         let content
         {this.state.loading ? content = 
         <p id='loader' className='text-center' style={{margin:'30px'}}>
-        LOADING PLEASE...</p> : content = <Main />}
+        LOADING PLEASE...</p> : content = 
+        <Main 
+        tetherBalance={this.state.tetherBalance}
+        rwdBalance={this.state.rwdBalance}
+        stakingBalance={this.state.stakingBalance}
+        stakeTokens={this.stakeTokens}
+        />}
         return (
             <div>
                 <Navbar account={this.state.account}/>
-                <div className='containter-fluid mt-5'>
+                <div className='container-fluid mt-5'>
                     <div className='row'>
                         <main role='main' className='col-lg-12 ml-auto mr-auto' style={{maxWidth: '600px', minHeight: '100vm'}}>
                             <div>
                                 {content}
+                                {console.log(this.state.loading)}
                             </div>
                         </main>
                     </div>
