@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import tether from '../tether.png'
 import Web3 from 'web3';
+import Airdrop from './Airdrop';
 
 
 class Main extends Component {
@@ -61,7 +62,7 @@ class Main extends Component {
                     }}
                     className='btn btn-primary btn-lg btn-block'>Withdraw</button>
                     <div className='card-body text-center' style={{color:'blue'}}>
-                        AIRDROP
+                        AIRDROP <Airdrop />
                     </div>
                 </div>
             </div>
