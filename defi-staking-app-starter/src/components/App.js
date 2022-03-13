@@ -71,13 +71,6 @@ class App extends Component {
         this.setState({loading: false})
     }
 
-    // two functions, one that stakes and one that unstakes
-    // leverage our decentralBank contract - deposit tokens and unstaking
-    // All of this is for the staking:
-    // depositTokens transferFrom ....
-    // function approve transaction hash ----
-    // STAKING FUNCTION ?? >> decentralBank.deposit(send transactionHash => )
-
     // staking function
     stakeTokens = (amount) => {
         this.setState({loading: true})
