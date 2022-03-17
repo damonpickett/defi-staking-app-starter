@@ -19,9 +19,13 @@ class App extends Component {
 
     // this function connects app to meta mask
     async loadWeb3() {
+        // window.ethereum is injected into the page by metamask
         if(window.ethereum) {
+            // window.web3 appears to be a pre-existing empty object which is then assigned the new Web3 object
             window.web3 = new Web3(window.ethereum)
-            await window.ethereum.enable()
+            // requests accounts from metamask
+            await window.ethereum.request({ method: 'eth_requestAccounts' })
+        // grabs wallet if your wallet is not metamask
         } else if(window.web3) {
                 window.web3 = new Web3(window.web3.currentProvider)
             } else {
@@ -30,25 +34,31 @@ class App extends Component {
         }
     
     async loadBlockchainData() {
+        // web3 is made my Web3 object which is populated by metamask
         const web3 = window.web3
+        // grabs accounts from meta mask [but is only grabbing one, I think this is a problem]
         const account = await web3.eth.getAccounts()
         this.setState({account: account[0]})
+        // grabbing Ganache network ID 5777
         const networkId = await web3.eth.net.getId()
 
-        // Load Tether contract
+        // Load Tether tokens
+        // storing access to Tether abi file info
         const tetherData = Tether.networks[networkId]
         if(tetherData) {
+           // storing ability to interact with Tether contract via Tether.abi 
            const tether = new web3.eth.Contract(Tether.abi, tetherData.address)
+           // I think I'm setting my tether state to the tether variable declared above
            this.setState({tether})
+           // This appears to be accessing 'totalSupply' in the constructor in Tether.sol
            let tetherBalance = await tether.methods.balanceOf(this.state.account).call()
            this.setState({tetherBalance: tetherBalance.toString()})
         } else {
             window.alert('Error! Tether contract not deployed - no detected network')
         }
-
+        
         // Load RWD Contract
         const rwdData = RWD.networks[networkId]
-        console.log(rwdData)
         if(rwdData) {
            const rwd = new web3.eth.Contract(RWD.abi, rwdData.address)
            this.setState({rwd})
@@ -57,7 +67,7 @@ class App extends Component {
         } else {
             window.alert('Error! Reward token contract not deployed - no detected network')
         }
-
+        
         // Load DecentralBank Contract
         const decentralBankData = DecentralBank.networks[networkId]
         if(tetherData) {
