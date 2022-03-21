@@ -64,13 +64,14 @@ class App extends Component {
            this.setState({rwd})
            let rwdBalance = await rwd.methods.balanceOf(this.state.account).call()
            this.setState({rwdBalance: rwdBalance.toString()})
+           console.log(rwdBalance)
         } else {
             window.alert('Error! Reward token contract not deployed - no detected network')
         }
         
         // Load DecentralBank Contract
         const decentralBankData = DecentralBank.networks[networkId]
-        if(tetherData) {
+        if(decentralBankData) {
            const decentralBank = new web3.eth.Contract(DecentralBank.abi, decentralBankData.address)
            this.setState({decentralBank})
            let stakingBalance = await decentralBank.methods.stakingBalance(this.state.account).call()

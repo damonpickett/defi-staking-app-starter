@@ -61,6 +61,7 @@ class Airdrop extends Component {
         if(stakingB >= '50000000000000000000') {
             this.startTimer()
         }
+        // code for issuing tokens must come here
     }
 
     render() {
