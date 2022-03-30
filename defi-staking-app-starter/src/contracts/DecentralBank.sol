@@ -2,6 +2,7 @@ pragma solidity ^0.5.0;
 import './RWD.sol';
 import './Tether.sol';
 
+// DecentralBank is a contract pertaining to the movement of money in and out of the bank
 contract DecentralBank {
     string public name = 'Decentral Bank';
     address public owner;

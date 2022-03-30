@@ -62,6 +62,7 @@ class Airdrop extends Component {
             this.startTimer()
         }
         // code for issuing tokens must come here
+        // when timer gets to zero, issueTokens from DecentralBank.sol
     }
 
     render() {

@@ -52,6 +52,7 @@ class App extends Component {
            this.setState({tether})
            // This appears to be accessing 'totalSupply' in the constructor in Tether.sol
            let tetherBalance = await tether.methods.balanceOf(this.state.account).call()
+           console.log(this.state.account)
            this.setState({tetherBalance: tetherBalance.toString()})
         } else {
             window.alert('Error! Tether contract not deployed - no detected network')
@@ -64,7 +65,6 @@ class App extends Component {
            this.setState({rwd})
            let rwdBalance = await rwd.methods.balanceOf(this.state.account).call()
            this.setState({rwdBalance: rwdBalance.toString()})
-           console.log(rwdBalance)
         } else {
             window.alert('Error! Reward token contract not deployed - no detected network')
         }
@@ -112,6 +112,8 @@ class App extends Component {
             loading: true
         }
     }
+
+    
 
     render() {
         let content

@@ -1,5 +1,6 @@
 pragma solidity ^0.5.0;
 
+// Tether is a contract pertaining to the movement on Tether
 contract Tether {
     string public name = 'Mock Tether Token';
     string public symbol = 'mUSDT';
